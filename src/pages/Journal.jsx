@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Search, Calendar, FolderOpen, Clock, User, ArrowRight, X, AlertCircle } from 'lucide-react';
+import useArticles from '../hooks/useArticles';
 import { blogPosts } from '../data/mockData';
 import Skeleton from '../components/Skeleton';
 import SEO from '../components/SEO';
@@ -90,25 +92,35 @@ const getArticleSections = (article) => {
 };
 
 export default function Journal() {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [isLoading, setIsLoading] = useState(false);
+  const [simulatorLoading, setSimulatorLoading] = useState(false);
   const [selectedArticle, setSelectedArticle] = useState(null);
+
+  const { data: cmsArticles, loading: articlesLoading, error: articlesError } = useArticles();
+  const postsList = cmsArticles && cmsArticles.length > 0 ? cmsArticles : blogPosts;
 
   // Trigger brief simulator when filtering or searching to show loading skeletons
   useEffect(() => {
-    setIsLoading(true);
+    setSimulatorLoading(true);
     const timer = setTimeout(() => {
-      setIsLoading(false);
+      setSimulatorLoading(false);
     }, 450);
     return () => clearTimeout(timer);
   }, [searchTerm, selectedCategory]);
 
-  const filteredPosts = blogPosts.filter((post) => {
+  const isLoading = articlesLoading || simulatorLoading;
+
+  const filteredPosts = postsList.filter((post) => {
+    const titleMatch = post.title?.toLowerCase() || '';
+    const excerptMatch = post.excerpt?.toLowerCase() || '';
+    const contentMatch = post.content?.toLowerCase() || '';
+
     const matchesSearch =
-      post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      post.content.toLowerCase().includes(searchTerm.toLowerCase());
+      titleMatch.includes(searchTerm.toLowerCase()) ||
+      excerptMatch.includes(searchTerm.toLowerCase()) ||
+      contentMatch.includes(searchTerm.toLowerCase());
 
     const matchesCategory = selectedCategory === 'All' || post.category === selectedCategory;
 
@@ -116,7 +128,7 @@ export default function Journal() {
   });
 
   // Identify featured post
-  const featuredPost = blogPosts.find((p) => p.featured) || blogPosts[0];
+  const featuredPost = postsList.find((p) => p.featured) || postsList[0];
 
   return (
     <div className="bg-theme-background text-theme-text-primary min-h-screen transition-colors duration-200 pb-16">
@@ -388,7 +400,7 @@ export default function Journal() {
                 <div className="w-full h-[180px] md:h-[280px] rounded-xl overflow-hidden shadow-sm bg-gradient-to-br from-slate-950 to-amber-950 relative select-none">
                   <img 
                     referrerPolicy="no-referrer"
-                    src={articleImages[selectedArticle.id] || "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80"}
+                    src={selectedArticle.featuredImage || articleImages[selectedArticle.id] || "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80"}
                     alt={selectedArticle.title}
                     className="w-full h-full object-cover opacity-80"
                   />
@@ -494,7 +506,7 @@ export default function Journal() {
                   id="modal-engagement-query-btn"
                   onClick={() => {
                     setSelectedArticle(null);
-                    window.location.hash = '#/contact'; // SPA hash routing fallback
+                    navigate('/contact');
                   }}
                   className="px-5 py-2.5 bg-theme-primary hover:opacity-90 text-theme-background font-bold rounded-lg text-xs font-display cursor-pointer transition-all duration-150 inline-flex items-center gap-1.5 shadow-sm hover:scale-[1.02] active:scale-[0.98]"
                 >

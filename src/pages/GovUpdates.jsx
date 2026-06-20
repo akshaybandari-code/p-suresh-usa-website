@@ -17,6 +17,7 @@ import {
   CalendarDays,
   Info
 } from 'lucide-react';
+import useTaxUpdates from '../hooks/useTaxUpdates';
 import CTASection from '../components/CTASection';
 import Skeleton from '../components/Skeleton';
 import SEO from '../components/SEO';
@@ -232,24 +233,34 @@ const cmsComplianceCalendarSchema = [
 export default function GovUpdates() {
   const [activeIrsTopic, setActiveIrsTopic] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [simulatorLoading, setSimulatorLoading] = useState(false);
+
+  const { data: taxUpdates, loading: cmsLoading } = useTaxUpdates();
+  const updatesList = taxUpdates && taxUpdates.length > 0 ? taxUpdates : cmsIrsUpdatesSchema;
 
   const irsTopics = ['All', 'IRS News', 'FBAR', 'FATCA', 'Form 5471', 'Form 8938', 'Tax Deadlines', 'Expat Compliance'];
 
   // Toggle loading state simulator on category filter change to show skeletons
   useEffect(() => {
-    setIsLoading(true);
+    setSimulatorLoading(true);
     const timer = setTimeout(() => {
-      setIsLoading(false);
+      setSimulatorLoading(false);
     }, 450);
     return () => clearTimeout(timer);
   }, [activeIrsTopic, searchTerm]);
 
+  const isLoading = cmsLoading || simulatorLoading;
+
   // Combined filter: Category + Search, then sort by latest date implicitly (data is already sorted but we can do a date sort if required. Currently they are ordered descending by mock data, let's keep it that way)
-  const filteredCmsUpdates = cmsIrsUpdatesSchema.filter(update => {
-    const matchesTopic = activeIrsTopic === 'All' || update.topic === activeIrsTopic;
-    const matchesSearch = update.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                          update.summary.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredCmsUpdates = updatesList.filter(update => {
+    const topic = update.topic || update.category || 'All';
+    const matchesTopic = activeIrsTopic === 'All' || topic.toLowerCase() === activeIrsTopic.toLowerCase();
+    
+    const titleMatch = update.title?.toLowerCase() || '';
+    const summaryMatch = update.summary?.toLowerCase() || '';
+
+    const matchesSearch = titleMatch.includes(searchTerm.toLowerCase()) || 
+                          summaryMatch.includes(searchTerm.toLowerCase());
     return matchesTopic && matchesSearch;
   });
 
@@ -345,11 +356,12 @@ export default function GovUpdates() {
 
                 const isHighImportance = item.importance === 'high';
 
+                const topicName = item.topic || item.category || 'All';
                 return (
                   <div
                     key={item.id}
                     id={`irs-cms-card-${item.id}`}
-                    name={item.topic}
+                    name={topicName}
                     className="bg-theme-card border border-theme-border hover:border-amber-500/40 rounded-xl p-6 shadow-3xs hover:shadow-xs transition-all duration-300 flex flex-col justify-between hover:translate-y-[-3px] select-none"
                   >
                     <div className="space-y-4">
@@ -357,10 +369,10 @@ export default function GovUpdates() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <div className="p-1.5 bg-theme-surface rounded border border-theme-border flex-shrink-0">
-                            {getTopicIcon(item.topic)}
+                            {getTopicIcon(topicName)}
                           </div>
                           <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-500">
-                            {item.topic}
+                            {topicName}
                           </span>
                         </div>
                         <span className={`px-2 py-0.5 rounded text-[9px] font-mono tracking-tight font-bold ${
@@ -368,7 +380,7 @@ export default function GovUpdates() {
                             ? 'bg-red-500/10 text-red-500 border border-red-500/20'
                             : 'bg-theme-surface text-theme-text-secondary border border-theme-border'
                         }`}>
-                          {item.importance.toUpperCase()} PRIORITY
+                          {(item.importance || 'medium').toUpperCase()} PRIORITY
                         </span>
                       </div>
 
@@ -378,7 +390,7 @@ export default function GovUpdates() {
                           {item.title}
                         </h3>
                         <p className="text-[9px] font-mono text-theme-text-secondary uppercase select-none">
-                          Source: {item.source}
+                          Source: {item.source || 'IRS'}
                         </p>
                       </div>
 
@@ -388,18 +400,21 @@ export default function GovUpdates() {
                       </p>
 
                       {/* Diagnostic Bullet list */}
-                      <div className="pt-2.5 border-t border-theme-border/60 space-y-2">
-                        <p className="text-[10px] uppercase font-mono tracking-wider font-extrabold text-theme-text-primary">Filing Guidelines:</p>
-                        <ul className="space-y-1.5">
-                          {item.guidelines.map((line, index) => (
-                            <li key={index} className="flex items-start gap-1.5 text-xs text-theme-text-secondary font-sans leading-relaxed">
-                              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
-                              <span>{line}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                      {(item.guidelines && item.guidelines.length > 0) && (
+                        <div className="pt-2.5 border-t border-theme-border/60 space-y-2">
+                          <p className="text-[10px] uppercase font-mono tracking-wider font-extrabold text-theme-text-primary">Filing Guidelines:</p>
+                          <ul className="space-y-1.5">
+                            {item.guidelines.map((line, index) => (
+                              <li key={index} className="flex items-start gap-1.5 text-xs text-theme-text-secondary font-sans leading-relaxed">
+                                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                                <span>{line}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                     </div>
+
 
                     {/* Date and actions */}
                     <div className="pt-4 mt-6 border-t border-theme-border flex items-center justify-between text-[10px] font-mono text-theme-text-secondary">

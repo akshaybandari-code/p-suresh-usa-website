@@ -1,9 +1,14 @@
+import React from 'react';
+import useTeam from '../hooks/useTeam';
 import { teamData } from '../data/mockData';
 import { Award, ShieldCheck, Mail, Phone } from 'lucide-react';
 import CTASection from '../components/CTASection';
 import SEO from '../components/SEO';
 
 export default function Team() {
+  const { data: teamMembers, loading, error } = useTeam();
+  const teamList = teamMembers && teamMembers.length > 0 ? teamMembers : teamData;
+
   return (
     <div className="bg-theme-background text-theme-text-primary min-h-screen transition-colors duration-200 pb-16">
       <SEO title="Our Partners" description="Meet our leading practice partners—specialist Chartered Accountants and US CPAs navigating cross-border tax." url="https://www.suureshusa.com/team" />
@@ -24,8 +29,10 @@ export default function Team() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           
-          {teamData.map((member) => {
-            const initials = member.name.split(' ').map(n => n[0]).join('').replace(',', '');
+          {teamList.map((member) => {
+            const initials = (member.name || '').split(' ').map(n => n[0]).join('').replace(',', '');
+            const expertiseList = member.expertise || [];
+            const credentialsList = member.credentials || [];
             return (
               <div
                 key={member.id}
@@ -46,6 +53,16 @@ export default function Team() {
                       {initials}
                     </div>
 
+                    {/* Support profiles with true images if available from CMS */}
+                    {member.profileImage && (
+                      <img 
+                        referrerPolicy="no-referrer"
+                        src={member.profileImage}
+                        alt={member.name}
+                        className="absolute inset-0 w-full h-full object-cover opacity-35 hover:opacity-50 transition-opacity duration-350"
+                      />
+                    )}
+
                     <div className="relative z-10 text-white space-y-0.5">
                       <p className="text-2xs font-mono tracking-widest text-amber-400 uppercase">PARTNER PORTRAIT</p>
                       <h3 className="text-xl font-bold font-display leading-tight">{member.name}</h3>
@@ -60,36 +77,41 @@ export default function Team() {
                     </p>
 
                     {/* Expertise Bullets */}
-                    <div className="space-y-2">
-                      <p className="text-2xs font-mono uppercase tracking-widest text-theme-text-secondary font-bold">Core Advisory Areas</p>
-                      <div className="flex flex-wrap gap-1.5">
-                        {member.expertise.map((exp, expIdx) => (
-                          <span
-                            key={expIdx}
-                            className="px-2.5 py-0.5 bg-theme-surface border border-theme-border text-[10.5px] rounded-md font-sans text-theme-text-secondary"
-                          >
-                            {exp}
-                          </span>
-                        ))}
+                    {expertiseList.length > 0 && (
+                      <div className="space-y-2">
+                        <p className="text-2xs font-mono uppercase tracking-widest text-theme-text-secondary font-bold">Core Advisory Areas</p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {expertiseList.map((exp, expIdx) => (
+                            <span
+                              key={expIdx}
+                              className="px-2.5 py-0.5 bg-theme-surface border border-theme-border text-[10.5px] rounded-md font-sans text-theme-text-secondary"
+                            >
+                              {exp}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </div>
+                    )}
 
                     {/* Credentials Checklist */}
-                    <div className="space-y-2 pt-4 border-t border-theme-border">
-                      <p className="text-2xs font-mono uppercase tracking-widest text-theme-text-secondary font-bold">Registrations & Licenses</p>
-                      <ul className="space-y-1.5">
-                        {member.credentials.map((cred, credIdx) => (
-                          <li key={credIdx} className="flex items-start gap-2 text-xs font-semibold text-theme-text-primary font-sans leading-normal">
-                            <Award className="w-3.5 h-3.5 text-amber-500 shrink-0 mt-0.5" />
-                            <span>{cred}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                    {credentialsList.length > 0 && (
+                      <div className="space-y-2 pt-4 border-t border-theme-border">
+                        <p className="text-2xs font-mono uppercase tracking-widest text-theme-text-secondary font-bold">Registrations & Licenses</p>
+                        <ul className="space-y-1.5">
+                          {credentialsList.map((cred, credIdx) => (
+                            <li key={credIdx} className="flex items-start gap-2 text-xs font-semibold text-theme-text-primary font-sans leading-normal">
+                              <Award className="w-3.5 h-3.5 text-amber-500 shrink-0 mt-0.5" />
+                              <span>{cred}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
 
                   </div>
 
                 </div>
+
 
                 {/* Secure consultation hooks */}
                 <div className="pt-6 mt-8 border-t border-theme-border flex items-center justify-between">

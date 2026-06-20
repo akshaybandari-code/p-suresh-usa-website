@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import useResources from '../hooks/useResources';
 import {
   taxDeadlinesData,
   complianceChecklists,
   resourcesData,
 } from '../data/mockData';
+
 import {
   CalendarDays,
   Clock,
@@ -19,18 +21,23 @@ import Skeleton from '../components/Skeleton';
 export default function Resources() {
   const [activeTab, setActiveTab ] = useState('calendar');
   const [downloadSuccessItem, setDownloadSuccessItem] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [simulatorLoading, setSimulatorLoading] = useState(false);
+
+  const { data: cmsResources, loading: resourcesLoading } = useResources();
+  const resourcesList = cmsResources && cmsResources.length > 0 ? cmsResources : resourcesData;
   
   // Interactive checklist state trackers to let users click things
   const [checkedItems, setCheckedItems] = useState({});
 
   useEffect(() => {
-    setIsLoading(true);
+    setSimulatorLoading(true);
     const timer = setTimeout(() => {
-      setIsLoading(false);
+      setSimulatorLoading(false);
     }, 450);
     return () => clearTimeout(timer);
   }, [activeTab]);
+
+  const isLoading = resourcesLoading || simulatorLoading;
 
   const handleToggleCheck = (itemId, index) => {
     const key = `${itemId}-${index}`;
@@ -274,7 +281,7 @@ export default function Resources() {
                 </div>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {resourcesData.map((res) => {
+                  {resourcesList.map((res) => {
                   return (
                     <div
                       key={res.id}

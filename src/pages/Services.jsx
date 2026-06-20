@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
+import useServices from '../hooks/useServices';
 import { servicesData } from '../data/mockData';
 import {
   FileText,
@@ -11,7 +12,8 @@ import {
   Briefcase,
   ArrowRight,
   CheckCircle,
-  HelpCircle
+  HelpCircle,
+  Loader2
 } from 'lucide-react';
 import CTASection from '../components/CTASection';
 import SEO from '../components/SEO';
@@ -27,8 +29,11 @@ const iconMap = {
 
 export default function Services() {
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const { data: services, loading, error } = useServices();
 
-  const filteredServices = servicesData.filter((s) => {
+  const servicesList = services && services.length > 0 ? services : servicesData;
+
+  const filteredServices = servicesList.filter((s) => {
     if (selectedCategory === 'all') return true;
     return s.category === selectedCategory;
   });
@@ -63,7 +68,7 @@ export default function Services() {
                 : 'bg-theme-card text-theme-text-secondary hover:text-theme-text-primary hover:bg-theme-surface border border-theme-border'
             }`}
           >
-            ALL PRACTICE AREAS ({servicesData.length})
+            ALL PRACTICE AREAS ({servicesList.length})
           </button>
           <button
             id="filter-services-indi-btn"
