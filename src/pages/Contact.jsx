@@ -73,6 +73,19 @@ export default function Contact() {
     return Object.keys(tempErrors).length === 0;
   };
 
+  const getEnvValue = (value, fallback) => {
+    if (!value || typeof value !== 'string') return fallback;
+    const trimmed = value.trim();
+    if (!trimmed || trimmed === 'undefined' || trimmed === 'null' || trimmed === '""' || trimmed === "''") {
+      return fallback;
+    }
+    const clean = trimmed.replace(/^["']|["']$/g, '').trim();
+    if (!clean || clean.startsWith('YOUR_') || clean === 'undefined' || clean === 'null') {
+      return fallback;
+    }
+    return clean;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) {
@@ -85,10 +98,10 @@ export default function Contact() {
     setIsSubmitting(true);
     setSubmitError('');
 
-    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-    const templateIdAdmin = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-    const templateIdUser = import.meta.env.VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID;
-    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+    const serviceId = getEnvValue(import.meta.env.VITE_EMAILJS_SERVICE_ID, 'service_5s0hmfk');
+    const templateIdAdmin = getEnvValue(import.meta.env.VITE_EMAILJS_TEMPLATE_ID, 'template_amj1887');
+    const templateIdUser = getEnvValue(import.meta.env.VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID, 'template_j98n75g');
+    const publicKey = getEnvValue(import.meta.env.VITE_EMAILJS_PUBLIC_KEY, 'b-MFsKjqa8bydKNQ4');
 
     const randomId = `SUURESH-26-${Math.floor(1000 + Math.random() * 9005)}`;
 
