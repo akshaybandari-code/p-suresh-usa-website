@@ -34,10 +34,9 @@ export default function Navbar({ onMenuToggle, adminUser }) {
       </div>
 
       <div className="flex items-center gap-4">
-        {/* Live Operational Status */}
-        <div className="hidden md:flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-tight font-bold text-emerald-500 select-none">
-          <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          <span>System Status</span>
+        {/* Administrator Role Badge */}
+        <div className="hidden md:flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-tight font-bold text-amber-500 select-none">
+          <span>Authorized Administrator</span>
         </div>
 
         {/* Theme Toggle */}

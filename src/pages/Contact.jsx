@@ -13,7 +13,7 @@ import {
   Globe2,
   Building2
 } from 'lucide-react';
-import { servicesData } from '../data/mockData';
+import useServices from '../hooks/useServices';
 import emailjs from '@emailjs/browser';
 import SEO from '../components/SEO';
 
@@ -28,6 +28,8 @@ const initialForm = {
 };
 
 export default function Contact() {
+  const { data: servicesData = [] } = useServices();
+
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);

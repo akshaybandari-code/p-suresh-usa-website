@@ -1,13 +1,12 @@
 import React from 'react';
 import useTeam from '../hooks/useTeam';
-import { teamData } from '../data/mockData';
 import { Award, ShieldCheck, Mail, Phone } from 'lucide-react';
 import CTASection from '../components/CTASection';
 import SEO from '../components/SEO';
 
 export default function Team() {
   const { data: teamMembers, loading, error } = useTeam();
-  const teamList = teamMembers && teamMembers.length > 0 ? teamMembers : teamData;
+  const teamList = teamMembers || [];
 
   return (
     <div className="bg-theme-background text-theme-text-primary min-h-screen transition-colors duration-200 pb-16">
@@ -29,7 +28,11 @@ export default function Team() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           
-          {teamList.map((member) => {
+          {teamList.length === 0 ? (
+            <div className="col-span-full py-20 text-center">
+              <p className="text-xl text-theme-text-secondary">No content available.</p>
+            </div>
+          ) : teamList.map((member) => {
             const initials = (member.name || '').split(' ').map(n => n[0]).join('').replace(',', '');
             const expertiseList = member.expertise || [];
             const credentialsList = member.credentials || [];
@@ -105,6 +108,19 @@ export default function Team() {
                             </li>
                           ))}
                         </ul>
+                      </div>
+                    )}
+
+                    {/* US Market Experience & Qualifications Block */}
+                    {member.usMarketExperience && (
+                      <div className="space-y-2 pt-4 border-t border-theme-border">
+                        <p className="text-2xs font-mono uppercase tracking-widest text-amber-500 font-bold flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+                          US Market Experience
+                        </p>
+                        <p className="text-xs text-theme-text-primary bg-amber-500/[0.04] dark:bg-amber-500/[0.02] border border-amber-500/10 p-3 rounded-xl leading-relaxed italic font-sans font-medium">
+                          "{member.usMarketExperience}"
+                        </p>
                       </div>
                     )}
 

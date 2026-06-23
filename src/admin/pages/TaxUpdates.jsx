@@ -29,6 +29,7 @@ export default function TaxUpdates() {
     importance: 'medium',
     summary: '',
     guidelines: '',
+    source_url: '',
   });
 
   // Delete checklist triggers
@@ -90,6 +91,7 @@ export default function TaxUpdates() {
       importance: 'medium',
       summary: '',
       guidelines: 'Verify residency thresholds of Form 8938.\nReconcile global assets with FBAR peak summaries.\nFile treaty claims on physical Form 8833 schedules.',
+      source_url: '',
     });
     setIsEditing(false);
     setIsModalOpen(true);
@@ -104,6 +106,7 @@ export default function TaxUpdates() {
       importance: item.importance || 'medium',
       summary: item.summary || '',
       guidelines: Array.isArray(item.guidelines) ? item.guidelines.join('\n') : (item.guidelines || ''),
+      source_url: item.source_url || item.officialUrl || '',
     });
     setIsEditing(true);
     setIsModalOpen(true);
@@ -129,6 +132,7 @@ export default function TaxUpdates() {
       importance: formData.importance,
       summary: formData.summary.trim(),
       guidelines: guidelinesArr,
+      source_url: formData.source_url.trim() || 'https://www.irs.gov',
     };
 
     try {
@@ -346,6 +350,20 @@ export default function TaxUpdates() {
                 <option value="high">High Priority</option>
               </select>
             </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="font-mono text-2xs uppercase tracking-wider font-extrabold text-theme-text-secondary">
+              Official Source URL
+            </label>
+            <input
+              type="url"
+              required
+              value={formData.source_url}
+              onChange={(e) => setFormData({ ...formData, source_url: e.target.value })}
+              placeholder="e.g. https://www.irs.gov/businesses/corporations/foreign-account-tax-compliance-act-fatca"
+              className="w-full bg-theme-surface border border-theme-border hover:border-theme-border/80 focus:border-amber-500 rounded-lg px-3 py-2 text-xs text-theme-text-primary focus:outline-hidden transition-all font-sans"
+            />
           </div>
 
           <div className="space-y-1.5 font-sans">

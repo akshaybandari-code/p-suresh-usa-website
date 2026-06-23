@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { safeLocalStorage as localStorage } from '../utils/safeLocalStorage';
 
 const ThemeContext = createContext(undefined);
 
@@ -9,8 +10,11 @@ export function ThemeProvider({ children }) {
       if (savedTheme === 'light' || savedTheme === 'dark') {
         return savedTheme;
       }
-      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      return systemPrefersDark ? 'dark' : 'light';
+      if (typeof window !== 'undefined' && window.matchMedia) {
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        return systemPrefersDark ? 'dark' : 'light';
+      }
+      return 'light';
     } catch {
       return 'light';
     }

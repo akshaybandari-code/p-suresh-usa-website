@@ -12,13 +12,21 @@ const isConfigured =
   projectId !== 'YOUR_SANITY_PROJECT_ID' &&
   /^[a-zA-Z0-9-]+$/.test(projectId.trim());
 
-export const sanityClient = createClient({
-  // Use a fallback registry-compliant dummy ID (letters/numbers/dashes, no underscores) to prevent client boot errors
-  projectId: isConfigured ? projectId.trim() : 'unconfigured-id',
-  dataset,
-  apiVersion,
-  useCdn: true,
-});
+let clientInstance = null;
+try {
+  if (isConfigured) {
+    clientInstance = createClient({
+      projectId: projectId.trim(),
+      dataset,
+      apiVersion,
+      useCdn: true,
+    });
+  }
+} catch (err) {
+  console.warn('Sanity client initialization error:', err);
+}
+
+export const sanityClient = clientInstance;
 
 export const checkIfConfigured = () => isConfigured;
 

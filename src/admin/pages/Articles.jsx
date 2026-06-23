@@ -311,14 +311,18 @@ export default function Articles() {
               <label className="font-mono text-2xs uppercase tracking-wider font-extrabold text-theme-text-secondary">
                 Publish Category / Topic
               </label>
-              <input
-                type="text"
+              <select
                 required
                 value={formData.category}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                placeholder="e.g. FBAR"
                 className="w-full bg-theme-surface border border-theme-border hover:border-theme-border/80 focus:border-amber-500 rounded-lg px-3 py-2 text-xs text-theme-text-primary focus:outline-hidden transition-all font-mono"
-              />
+              >
+                <option value="US Tax">US Tax</option>
+                <option value="FBAR">FBAR</option>
+                <option value="India-US Treaties">India-US Treaties</option>
+                <option value="NRI Compliance">NRI Compliance</option>
+                <option value="FATCA">FATCA</option>
+              </select>
             </div>
 
             <div className="space-y-1.5">

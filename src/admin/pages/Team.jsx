@@ -28,6 +28,7 @@ export default function Team() {
     expertise: '',
     credentials: '',
     profileImage: '',
+    usMarketExperience: '',
   });
 
   // Delete checklist triggers
@@ -87,6 +88,7 @@ export default function Team() {
       expertise: 'Bilateral Double Taxation\nFEMA Capital Outflow Rules\nForm 8938 threshold reviews',
       credentials: 'Chartered Accountant (ACA / FCA), ICAI\nOver 10 years of practice licensing',
       profileImage: '',
+      usMarketExperience: '',
     });
     setIsEditing(false);
     setIsModalOpen(true);
@@ -101,6 +103,7 @@ export default function Team() {
       expertise: Array.isArray(item.expertise) ? item.expertise.join('\n') : (item.expertise || ''),
       credentials: Array.isArray(item.credentials) ? item.credentials.join('\n') : (item.credentials || ''),
       profileImage: item.profileImage || '',
+      usMarketExperience: item.usMarketExperience || '',
     });
     setIsEditing(true);
     setIsModalOpen(true);
@@ -131,6 +134,7 @@ export default function Team() {
       expertise: expertiseArr,
       credentials: credentialsArr,
       profileImage: formData.profileImage.trim(),
+      usMarketExperience: formData.usMarketExperience.trim(),
     };
 
     try {
@@ -358,6 +362,19 @@ export default function Team() {
               value={formData.bio}
               onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
               placeholder="Ramesh focuses on dual-jurisdiction expatriate compliances, Streamlined Disclosures, and FEMA outward certifications..."
+              className="w-full bg-theme-surface border border-theme-border hover:border-theme-border/80 focus:border-amber-500 rounded-lg px-3 py-2 text-xs text-theme-text-primary focus:outline-hidden transition-all leading-relaxed text-[11px]"
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="font-mono text-2xs uppercase tracking-wider font-extrabold text-theme-text-secondary">
+              US Market Experience
+            </label>
+            <textarea
+              rows={2}
+              value={formData.usMarketExperience}
+              onChange={(e) => setFormData({ ...formData, usMarketExperience: e.target.value })}
+              placeholder="e.g. Managing cross-border compliance for non-resident Indian clients filing US returns..."
               className="w-full bg-theme-surface border border-theme-border hover:border-theme-border/80 focus:border-amber-500 rounded-lg px-3 py-2 text-xs text-theme-text-primary focus:outline-hidden transition-all leading-relaxed text-[11px]"
             />
           </div>

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import useServices from '../hooks/useServices';
-import { servicesData } from '../data/mockData';
 import {
   FileText,
   Globe,
@@ -17,6 +16,7 @@ import {
 } from 'lucide-react';
 import CTASection from '../components/CTASection';
 import SEO from '../components/SEO';
+import LegalDisclaimer from '../components/LegalDisclaimer';
 
 const iconMap = {
   FileText: FileText,
@@ -31,7 +31,7 @@ export default function Services() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const { data: services, loading, error } = useServices();
 
-  const servicesList = services && services.length > 0 ? services : servicesData;
+  const servicesList = services || [];
 
   const filteredServices = servicesList.filter((s) => {
     if (selectedCategory === 'all') return true;
@@ -101,7 +101,11 @@ export default function Services() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
           
           <AnimatePresence mode="popLayout">
-            {filteredServices.map((service, index) => {
+            {filteredServices.length === 0 ? (
+              <div className="max-w-4xl mx-auto py-20 text-center">
+                <p className="text-xl text-theme-text-secondary">No content available.</p>
+              </div>
+            ) : filteredServices.map((service, index) => {
               const IconComponent = iconMap[service.icon] || FileText;
               const isEven = index % 2 === 0;
 
@@ -234,6 +238,9 @@ export default function Services() {
 
         </div>
       </section>
+
+      {/* Legal Disclaimer Notification Banner */}
+      <LegalDisclaimer />
 
       {/* CTA final Section */}
       <CTASection />

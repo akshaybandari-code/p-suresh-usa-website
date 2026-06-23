@@ -52,7 +52,7 @@ function PublicLayout() {
       {/* Consumer Header Navbar */}
       <Navbar />
       
-      <div className="flex-grow">
+      <div className="flex-grow pt-20">
         <Outlet />
       </div>
 
@@ -77,6 +77,7 @@ export default function App() {
             <Route path="/services" element={<Services />} />
             <Route path="/journal" element={<Journal />} />
             <Route path="/updates" element={<GovUpdates />} />
+            <Route path="/tax-updates" element={<GovUpdates />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/team" element={<Team />} />
             <Route path="/contact" element={<Contact />} />

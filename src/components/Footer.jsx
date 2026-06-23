@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Landmark, Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
+import { Landmark, Mail, Phone, MapPin, Send, CheckCircle, Linkedin, Facebook, Twitter } from 'lucide-react';
 import { motion } from 'motion/react';
+import { safeLocalStorage as localStorage } from '../utils/safeLocalStorage';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -49,6 +50,54 @@ export default function Footer() {
             <p className="text-sm text-slate-400 dark:text-zinc-400 leading-relaxed font-sans">
               Specialized international tax firm and Chartered Accountancy office providing premium, compliance-first, dual-nation financial advising.
             </p>
+            <div className="flex items-center gap-3 pt-2 flex-wrap" id="footer-social-links-container">
+              <a 
+                id="footer-social-linkedin"
+                href={localStorage.getItem('social_linkedin') || 'https://linkedin.com/company/suureshusa'} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="p-1.5 rounded-md bg-slate-800 dark:bg-zinc-900 hover:bg-amber-400 dark:hover:bg-amber-400 hover:text-slate-900 dark:hover:text-slate-900 text-slate-400 transition-all duration-150"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="w-4 h-4" />
+              </a>
+              <a 
+                id="footer-social-facebook"
+                href={localStorage.getItem('social_facebook') || 'https://facebook.com/suureshusa'} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="p-1.5 rounded-md bg-slate-800 dark:bg-zinc-900 hover:bg-amber-400 dark:hover:bg-amber-400 hover:text-slate-900 dark:hover:text-slate-900 text-slate-400 transition-all duration-150"
+                aria-label="Facebook"
+              >
+                <Facebook className="w-4 h-4" />
+              </a>
+              <a 
+                id="footer-social-twitter"
+                href={localStorage.getItem('social_twitter') || 'https://x.com/suureshusa'} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="p-1.5 rounded-md bg-slate-800 dark:bg-zinc-900 hover:bg-amber-400 dark:hover:bg-amber-400 hover:text-slate-900 dark:hover:text-slate-900 text-slate-400 transition-all duration-150"
+                aria-label="X Twitter"
+              >
+                <Twitter className="w-4 h-4" />
+              </a>
+              <a 
+                id="footer-social-email"
+                href={localStorage.getItem('social_email') || 'mailto:tax@suureshusa.com'} 
+                className="p-1.5 rounded-md bg-slate-800 dark:bg-zinc-900 hover:bg-amber-400 dark:hover:bg-amber-400 hover:text-slate-900 dark:hover:text-slate-900 text-slate-400 transition-all duration-150"
+                aria-label="Email"
+              >
+                <Mail className="w-4 h-4" />
+              </a>
+              <a 
+                id="footer-social-phone"
+                href={`tel:${(localStorage.getItem('social_phone') || '+12124599023').replace(/[^\d+]/g, '')}`}
+                className="p-1.5 rounded-md bg-slate-800 dark:bg-zinc-900 hover:bg-amber-400 dark:hover:bg-amber-400 hover:text-slate-900 dark:hover:text-slate-900 text-slate-400 transition-all duration-150"
+                aria-label="Phone"
+              >
+                <Phone className="w-4 h-4" />
+              </a>
+            </div>
             <div className="pt-2 text-xs text-slate-500 font-mono">
               Established 1996 • New York, USA & Hyderabad, India
             </div>
@@ -110,14 +159,14 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-amber-400 shrink-0" />
-                <a href="mailto:tax@suureshusa.com" className="hover:text-white transition-colors">
-                  tax@suureshusa.com
+                <a href={localStorage.getItem('social_email') || 'mailto:tax@suureshusa.com'} className="hover:text-white transition-colors">
+                  {localStorage.getItem('social_email')?.replace('mailto:', '') || 'tax@suureshusa.com'}
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-amber-400 shrink-0" />
-                <a href="tel:+12124599023" className="hover:text-white transition-colors">
-                  +1 (212) 459-9023 (USA)
+                <a href={`tel:${(localStorage.getItem('social_phone') || '+12124599023').replace(/[^\d+]/g, '')}`} className="hover:text-white transition-colors">
+                  {localStorage.getItem('social_phone') || '+1 (212) 459-9023'}
                 </a>
               </li>
             </ul>

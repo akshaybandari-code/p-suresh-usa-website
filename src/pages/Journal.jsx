@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Search, Calendar, FolderOpen, Clock, User, ArrowRight, X, AlertCircle } from 'lucide-react';
 import useArticles from '../hooks/useArticles';
-import { blogPosts } from '../data/mockData';
 import Skeleton from '../components/Skeleton';
 import SEO from '../components/SEO';
+import LegalDisclaimer from '../components/LegalDisclaimer';
 
-const categories = ['All', 'US Tax', 'FBAR', 'FATCA', 'NRI Compliance', 'India-US Tax Treaty'];
+const categories = ['All', 'US Tax', 'FBAR', 'India-US Treaties', 'NRI Compliance', 'FATCA'];
 
 const articleImages = {
   'us-india-dtaa-capital-gains': 'https://images.unsplash.com/photo-1544377193-33dcf4d68fb5?auto=format&fit=crop&w=1200&q=80',
@@ -99,7 +99,7 @@ export default function Journal() {
   const [selectedArticle, setSelectedArticle] = useState(null);
 
   const { data: cmsArticles, loading: articlesLoading, error: articlesError } = useArticles();
-  const postsList = cmsArticles && cmsArticles.length > 0 ? cmsArticles : blogPosts;
+  const postsList = cmsArticles || [];
 
   // Trigger brief simulator when filtering or searching to show loading skeletons
   useEffect(() => {
@@ -334,6 +334,9 @@ export default function Journal() {
 
         </div>
       </main>
+
+      {/* Advisory Legal Disclaimer */}
+      <LegalDisclaimer />
 
       {/* ARTICLE READER POPUP MODAL (Simulating a premium reading vault) */}
       <AnimatePresence>

@@ -8,7 +8,7 @@ const navLinks = [
   { path: '/', label: 'Home' },
   { path: '/services', label: 'Services' },
   { path: '/journal', label: 'Insights' },
-  { path: '/updates', label: 'Tax Updates' },
+  { path: '/tax-updates', label: 'Tax Updates' },
   { path: '/resources', label: 'Resources' },
   { path: '/team', label: 'Our Team' },
   { path: '/contact', label: 'Contact Us' },
@@ -33,16 +33,13 @@ export default function Navbar() {
   }, [location.pathname]);
 
   return (
-    <header
-      id="main-navigation-header"
-      className={`sticky top-0 z-50 transition-all duration-300 w-full ${
-        isScrolled
-          ? 'bg-theme-background/95 backdrop-blur-md shadow-sm border-b border-theme-border'
-          : 'bg-theme-background/80 backdrop-blur-sm border-b border-theme-border/50'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+    <div className="fixed top-0 left-0 right-0 z-50 p-4 md:p-5 lg:px-8 w-full flex justify-center pointer-events-none">
+      <header
+        id="main-navigation-header"
+        className="pointer-events-auto w-full max-w-6xl bg-theme-background/70 backdrop-blur-xl border border-amber-500/20 rounded-[20px] shadow-lg transition-all duration-300 overflow-hidden"
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
           
           {/* Logo Brand */}
           <Link
@@ -64,7 +61,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav Items */}
-          <nav id="desktop-navbar-nav" className="hidden lg:flex items-center gap-7">
+          <nav id="desktop-navbar-nav" className="hidden lg:flex items-center lg:gap-4 xl:gap-6">
             {navLinks.map((link) => {
               const isActive = location.pathname === link.path;
               return (
@@ -162,5 +159,6 @@ export default function Navbar() {
         )}
       </AnimatePresence>
     </header>
+    </div>
   );
 }

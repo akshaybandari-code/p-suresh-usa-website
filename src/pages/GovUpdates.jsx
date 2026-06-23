@@ -21,116 +21,7 @@ import useTaxUpdates from '../hooks/useTaxUpdates';
 import CTASection from '../components/CTASection';
 import Skeleton from '../components/Skeleton';
 import SEO from '../components/SEO';
-
-// Structured data mock modeled exactly like a headless CMS delivery object (e.g., Sanity / Contentful schema)
-// This fulfills the CMS structural data preparation requirement.
-const cmsIrsUpdatesSchema = [
-  {
-    id: 'cms-up-irs-news',
-    topic: 'IRS News',
-    title: 'New IRS Modernization and Electronic Filing Initiatives',
-    source: 'Internal Revenue Service (IRS)',
-    date: 'June 12, 2026',
-    category: 'IRS News',
-    summary: 'The IRS announced expanded electronic filing options for amended expatriate returns and digital identity verification protocols. These initiatives aim to reduce processing lag for international individual tax returns.',
-    guidelines: [
-      'Allows electronic filing for older Form 1045 and 1040-X packages.',
-      'Introduces secure facial recognition login for tax transcript retrieval.',
-      'Expedites overseas identity confirmation through authorized consular agents.'
-    ],
-    importance: 'medium'
-  },
-  {
-    id: 'cms-up-fbar',
-    topic: 'FBAR',
-    title: 'FinCEN Form 114: Foreign Account Value Aggregation Rules',
-    source: 'FinCEN Treasury',
-    date: 'June 08, 2026',
-    category: 'FBAR Compliance',
-    summary: 'Strict aggregate threshold reporting requirements hold. Specified US persons holding foreign brokerage, Demat, and provident savings accounts must file if the total aggregate peak value crosses $10,000 USD at any instant.',
-    guidelines: [
-      'Aggregate peak is calculated by summing the absolute maximum exchange equivalent of all accounts.',
-      'Mandatory reporting of Indian Public Provident Funds (PPF) and Demat balances.',
-      'Jointly held accounts require individual disclosures by both resident co-signers.'
-    ],
-    importance: 'high'
-  },
-  {
-    id: 'cms-up-fatca',
-    topic: 'FATCA',
-    title: 'FATCA Intergovernmental Information Exchange Updates',
-    source: 'IRS International Operations',
-    date: 'May 24, 2026',
-    category: 'FATCA Disclosures',
-    summary: 'Bilateral automated data sharing protocols under the US-India Model 1 Intergovernmental Agreement are now updated. Native Indian banks share financial statements direct to the IRS using secure routing networks.',
-    guidelines: [
-      'Direct cross-match of NRO bank peak yields against US individual declarations.',
-      'Increased scrutiny on unaccounted overseas passive interest and capital proceeds.',
-      'Mandatory submission of Form 8938 if foreign asset thresholds are triggered.'
-    ],
-    importance: 'high'
-  },
-  {
-    id: 'cms-up-form-5471',
-    topic: 'Form 5471',
-    title: 'Form 5471 Classifications for Indian Private Limited Setups',
-    source: 'Treasury Decisions',
-    date: 'May 15, 2026',
-    category: 'Corporate Compliance',
-    summary: 'Filing rules for US persons who are officers, directors, or shareholders in specified foreign firms. This is critical for NRIs holding controlling shares in private corporations registered in India.',
-    guidelines: [
-      'Category 1 through 5 filing criteria outlined based on capital share ownership percentages.',
-      'Requires full balance sheet disclosure, income statement conversion, and transaction accounting.',
-      'High statutory penalties ($10,000 per violation of unfiled annual Form 5471 forms).'
-    ],
-    importance: 'high'
-  },
-  {
-    id: 'cms-up-form-8938',
-    topic: 'Form 8938',
-    title: 'Form 8938 Statement Thresholds & Dual-Status filing rules',
-    source: 'Internal Revenue Service (IRS)',
-    date: 'April 28, 2026',
-    category: 'Asset Disclosures',
-    summary: 'Guidance on Foreign Account Tax Compliance Act (FATCA) thresholds for individual taxpayers. Unlike FBAR, Form 8938 thresholds depend on domestic residential filing categories.',
-    guidelines: [
-      'Unmarried tax resident living in the US file if aggregate assets exceed $50,000 on last day of year.',
-      'Married tax resident filing jointly has a threshold limit of $100,050 to $150,000 USD.',
-      'Mandated to detail stock certificates, retirement accounts, and private business securities.'
-    ],
-    importance: 'medium'
-  },
-  {
-    id: 'cms-up-tax-deadlines',
-    topic: 'Tax Deadlines',
-    title: 'Bilateral US-India Tax Deadline Calendar & Reserving Extensions',
-    source: 'Department of Revenue',
-    date: 'April 10, 2026',
-    category: 'Tax Deadlines',
-    summary: 'Familiarize yourself with the key filing deadlines for both the US and Indian departments. Filing extensions should be structured in advance to coordinate state, federal, and local timelines.',
-    guidelines: [
-      'US Individual Filing Deadline is standardly April 15, with Form 4868 available to extend to Oct 15.',
-      'FBAR filings can be automatically extended to October 15 without a formal tax request.',
-      'Indian domestic non-audit tax returns are due July 31 for the corresponding assessment year.'
-    ],
-    importance: 'high'
-  },
-  {
-    id: 'cms-up-expat-compliance',
-    topic: 'Expat Compliance',
-    title: 'Expatriation Tax Rules & Streamlined Compliance Procedures',
-    source: 'IRS Commissioner Rulings',
-    date: 'March 18, 2026',
-    category: 'Expat Compliance',
-    summary: 'US expats and green card holders residing in India are subject to complex worldwide reporting. The IRS continues to operate Streamlined Filing Compliance Procedures for unfiled retrospect foreign assets.',
-    guidelines: [
-      'Allows past failures to be amended with reduced or waived civil penalties for non-willful errors.',
-      'Requires 3 years of individual federal income returns and 6 years of historic FBAR submissions.',
-      'Exit tax (Section 877A) planning for individuals intending to renounce US green cards/citizenship.'
-    ],
-    importance: 'medium'
-  }
-];
+import LegalDisclaimer from '../components/LegalDisclaimer';
 
 // Structured Compliance Calendar data mock
 const cmsComplianceCalendarSchema = [
@@ -236,7 +127,7 @@ export default function GovUpdates() {
   const [simulatorLoading, setSimulatorLoading] = useState(false);
 
   const { data: taxUpdates, loading: cmsLoading } = useTaxUpdates();
-  const updatesList = taxUpdates && taxUpdates.length > 0 ? taxUpdates : cmsIrsUpdatesSchema;
+  const updatesList = taxUpdates || [];
 
   const irsTopics = ['All', 'IRS News', 'FBAR', 'FATCA', 'Form 5471', 'Form 8938', 'Tax Deadlines', 'Expat Compliance'];
 
@@ -266,7 +157,7 @@ export default function GovUpdates() {
 
   return (
     <div className="bg-theme-background text-theme-text-primary min-h-screen transition-colors duration-200 pb-16">
-      <SEO title="Government Regulatory Updates" description="Official filings, tax developments, and government guidance related to US and India cross-border compliance." url="https://www.suureshusa.com/updates" />
+      <SEO title="Government Regulatory Updates" description="Official filings, tax developments, and government guidance related to US and India cross-border compliance." url="https://www.suureshusa.com/tax-updates" />
       {/* Page Header */}
       <section className="bg-theme-surface py-16 border-b border-theme-border select-none">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
@@ -337,6 +228,16 @@ export default function GovUpdates() {
               <Skeleton />
               <Skeleton />
               <Skeleton />
+            </div>
+          ) : filteredCmsUpdates.length === 0 ? (
+            <div className="text-center py-12 bg-theme-surface rounded-xl border border-dashed border-theme-border max-w-md mx-auto space-y-4">
+              <AlertCircle className="w-8 h-8 text-amber-500 mx-auto" />
+              <div className="space-y-1">
+                <p className="text-sm font-bold text-theme-text-primary">No content available.</p>
+                <p className="text-xs text-theme-text-secondary">
+                  We couldn't find matches for your search. Adjust your filters and try again.
+                </p>
+              </div>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -420,13 +321,26 @@ export default function GovUpdates() {
                     <div className="pt-4 mt-6 border-t border-theme-border flex items-center justify-between text-[10px] font-mono text-theme-text-secondary">
                       <span>Ref Date: {item.date}</span>
                       <a
-                        href="https://www.irs.gov"
+                        href={
+                          item.source_url || 
+                          item.officialUrl || 
+                          ({
+                            'IRS News': 'https://www.irs.gov/newsroom',
+                            'FBAR': 'https://www.fincen.gov/report-foreign-bank-and-financial-accounts',
+                            'FATCA': 'https://www.irs.gov/businesses/corporations/foreign-account-tax-compliance-act-fatca',
+                            'Form 5471': 'https://www.irs.gov/forms-pubs/about-form-5471',
+                            'Form 8938': 'https://www.irs.gov/forms-pubs/about-form-8938',
+                            'Tax Deadlines': 'https://www.irs.gov/filing/individuals/when-to-file',
+                            'Expat Compliance': 'https://www.irs.gov/individuals/international-taxpayers/streamlined-filing-compliance-procedures'
+                          }[item.topic] || 'https://www.irs.gov')
+                        }
                         target="_blank"
                         rel="noreferrer"
-                        className="text-amber-500 hover:text-amber-600 font-bold inline-flex items-center gap-0.5 transition-colors cursor-pointer"
+                        className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 dark:bg-amber-500/10 dark:hover:bg-amber-500 text-slate-950 dark:text-amber-400 dark:hover:text-slate-950 font-bold rounded-lg text-xs font-sans flex items-center gap-1.5 transition-all cursor-pointer shadow-3xs"
+                        id={`view-official-source-btn-${item.id}`}
                       >
-                        Official IRS Form
-                        <ArrowUpRight className="w-2.5 h-2.5" />
+                        <span>View Official Source</span>
+                        <ArrowUpRight className="w-3.5 h-3.5" />
                       </a>
                     </div>
                   </div>
@@ -521,6 +435,9 @@ export default function GovUpdates() {
         </div>
 
       </main>
+
+      {/* Advisory Legal Disclaimer */}
+      <LegalDisclaimer />
 
       {/* Reusable call to action block */}
       <CTASection />
