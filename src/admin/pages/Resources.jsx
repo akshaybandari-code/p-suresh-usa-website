@@ -288,7 +288,36 @@ export default function Resources() {
     {
       header: 'Download Link',
       accessor: 'downloadLink',
-      render: (row, val) => <span className="font-mono text-2xs truncate select-all">{val || '#'}</span>
+      render: (row, val) => {
+        const link = val && val !== '#' ? val : 'https://www.irs.gov/pub/irs-pdf/f1040.pdf';
+        return (
+          <div className="flex items-center gap-1.5 select-none font-sans">
+            <a 
+              href={link} 
+              target="_blank" 
+              rel="noreferrer"
+              className="px-2 py-1 bg-amber-500/10 hover:bg-amber-500 text-amber-500 hover:text-slate-950 border border-amber-500/20 hover:border-transparent rounded font-bold text-[10px] uppercase transition-all duration-200 cursor-pointer"
+            >
+              Download PDF
+            </a>
+            <a 
+              href={link} 
+              target="_blank" 
+              rel="noreferrer"
+              className="px-2 py-1 bg-theme-surface hover:bg-theme-border text-theme-text-primary border border-theme-border rounded font-bold text-[10px] uppercase transition-all duration-200 cursor-pointer"
+            >
+              View File
+            </a>
+            <button 
+              type="button"
+              onClick={() => showToast(`Previewing "${row.title || 'resource'}"...`)}
+              className="px-2 py-1 bg-theme-surface hover:bg-theme-border text-theme-text-primary border border-theme-border rounded font-bold text-[10px] uppercase transition-all duration-200 cursor-pointer"
+            >
+              Preview
+            </button>
+          </div>
+        );
+      }
     },
   ];
 
@@ -411,7 +440,7 @@ export default function Resources() {
         selectedCategory={selectedType}
         onCategoryChange={setSelectedType}
         onCreate={handleOpenCreateForm}
-        createLabel={subTab === 'guides' ? "Add File Resource" : "Add Tax Deadline"}
+        createLabel={subTab === 'guides' ? "Upload Resource" : "Add Tax Deadline"}
       />
 
       {/* Data Table */}

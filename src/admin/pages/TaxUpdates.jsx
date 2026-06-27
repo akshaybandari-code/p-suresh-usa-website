@@ -202,7 +202,7 @@ export default function TaxUpdates() {
       render: (row, val) => {
         const imp = (val || 'medium').toLowerCase();
         return (
-          <span className={`px-2.5 py-0.5 rounded-full font-mono text-[9px] font-bold uppercase select-none border ${
+          <span className={`px-2.5 py-1 text-[10px] tracking-wide rounded-full font-mono font-bold uppercase select-none border ${
             imp === 'high'
               ? 'bg-red-500/10 text-red-500 border-red-500/20 font-extrabold'
               : imp === 'low'
@@ -264,7 +264,7 @@ export default function TaxUpdates() {
         selectedCategory={selectedImportance}
         onCategoryChange={setSelectedImportance}
         onCreate={handleOpenCreateForm}
-        createLabel="Add Regulatory Update"
+        createLabel="New Update"
       />
 
       {/* Data Table */}

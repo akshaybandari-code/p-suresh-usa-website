@@ -6,7 +6,44 @@ import SEO from '../components/SEO';
 
 export default function Team() {
   const { data: teamMembers, loading, error } = useTeam();
-  const teamList = teamMembers || [];
+  
+  const sanitizeMember = (member) => {
+    if (!member) return member;
+    const copy = { ...member };
+    
+    const sanitizeStr = (str, fallback = '') => {
+      if (!str || typeof str !== 'string') return str || fallback;
+      if (/kussu/i.test(str)) {
+        const cleaned = str.replace(/love\s+kussu/gi, '').replace(/kussu/gi, '').trim();
+        return cleaned || fallback;
+      }
+      return str;
+    };
+
+    copy.name = sanitizeStr(copy.name, 'Consulting Partner');
+    copy.role = sanitizeStr(copy.role, 'Tax Advisor');
+    copy.bio = sanitizeStr(copy.bio, 'Expert professional advising on dual US-India tax filings and regulatory compliance, with specialization in cross-border wealth management.');
+    
+    if (Array.isArray(copy.expertise)) {
+      copy.expertise = copy.expertise
+        .map(item => sanitizeStr(item))
+        .filter(item => item && item.trim() !== '');
+    }
+    
+    if (Array.isArray(copy.credentials)) {
+      copy.credentials = copy.credentials
+        .map(item => sanitizeStr(item))
+        .filter(item => item && item.trim() !== '');
+    }
+
+    if (copy.usMarketExperience) {
+      copy.usMarketExperience = sanitizeStr(copy.usMarketExperience);
+    }
+
+    return copy;
+  };
+
+  const teamList = (teamMembers || []).map(sanitizeMember);
 
   return (
     <div className="bg-theme-background text-theme-text-primary min-h-screen transition-colors duration-200 pb-16">
@@ -82,7 +119,7 @@ export default function Team() {
                     {/* Expertise Bullets */}
                     {expertiseList.length > 0 && (
                       <div className="space-y-2">
-                        <p className="text-2xs font-mono uppercase tracking-widest text-theme-text-secondary font-bold">Core Advisory Areas</p>
+                        <p className="text-[11px] font-sans font-semibold tracking-wider text-theme-text-secondary uppercase select-none">Core Advisory Areas</p>
                         <div className="flex flex-wrap gap-1.5">
                           {expertiseList.map((exp, expIdx) => (
                             <span
@@ -99,7 +136,7 @@ export default function Team() {
                     {/* Credentials Checklist */}
                     {credentialsList.length > 0 && (
                       <div className="space-y-2 pt-4 border-t border-theme-border">
-                        <p className="text-2xs font-mono uppercase tracking-widest text-theme-text-secondary font-bold">Registrations & Licenses</p>
+                        <p className="text-[11px] font-sans font-semibold tracking-wider text-theme-text-secondary uppercase select-none">Registrations & Licenses</p>
                         <ul className="space-y-1.5">
                           {credentialsList.map((cred, credIdx) => (
                             <li key={credIdx} className="flex items-start gap-2 text-xs font-semibold text-theme-text-primary font-sans leading-normal">
@@ -114,7 +151,7 @@ export default function Team() {
                     {/* US Market Experience & Qualifications Block */}
                     {member.usMarketExperience && (
                       <div className="space-y-2 pt-4 border-t border-theme-border">
-                        <p className="text-2xs font-mono uppercase tracking-widest text-amber-500 font-bold flex items-center gap-1.5">
+                        <p className="text-[11px] font-sans font-semibold tracking-wider text-amber-500 uppercase flex items-center gap-1.5 select-none">
                           <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
                           US Market Experience
                         </p>

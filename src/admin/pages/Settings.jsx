@@ -47,6 +47,13 @@ export default function Settings() {
   // Success toast alerts
   const [toast, setToast] = useState({ message: '', type: 'success' });
 
+  // Sanity connection form
+  const [sanityForm, setSanityForm] = useState({
+    projectId: '',
+    dataset: 'production',
+    writeToken: '',
+  });
+
   const showToast = (message, type = 'success') => {
     setToast({ message, type });
     setTimeout(() => setToast({ message: '', type: 'success' }), 3000);
@@ -77,7 +84,29 @@ export default function Settings() {
       practiceArea: localStorage.getItem('org_practice_area') || 'India-US Cross-Border Tax & Compliance',
       regNumber: localStorage.getItem('org_reg_number') || 'ICAI Reg No. 102345/W',
     });
+
+    // Load Sanity credentials
+    setSanityForm({
+      projectId: localStorage.getItem('sanity_project_id') || '',
+      dataset: localStorage.getItem('sanity_dataset') || 'production',
+      writeToken: localStorage.getItem('sanity_write_token') || '',
+    });
   }, [adminUser]);
+
+  const handleSaveSanity = (e) => {
+    e.preventDefault();
+    if (sanityForm.projectId.trim()) {
+      localStorage.setItem('sanity_project_id', sanityForm.projectId.trim());
+      localStorage.setItem('sanity_dataset', sanityForm.dataset.trim());
+      localStorage.setItem('sanity_write_token', sanityForm.writeToken.trim());
+      showToast('Sanity CMS API integration updated successfully.', 'success');
+    } else {
+      localStorage.removeItem('sanity_project_id');
+      localStorage.removeItem('sanity_dataset');
+      localStorage.removeItem('sanity_write_token');
+      showToast('Sanity credentials cleared. Falling back to local offline mock data.', 'success');
+    }
+  };
 
   const handleSaveSocial = (e) => {
     e.preventDefault();
@@ -315,23 +344,77 @@ export default function Settings() {
           </form>
         </div>
 
-        {/* Informative Side Panel */}
+        {/* Sanity CMS Connection Status Form */}
         <div className="bg-theme-card border border-theme-border rounded-xl p-6 h-fit space-y-4">
-          <div className="flex items-center gap-2 border-b border-theme-border pb-3">
-            <Globe className="w-4 h-4 text-amber-500" />
-            <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-theme-text-primary">
-              CMS Scope
-            </h3>
+          <div className="flex items-center justify-between border-b border-theme-border pb-3">
+            <div className="flex items-center gap-2">
+              <Globe className="w-4 h-4 text-amber-500" />
+              <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-theme-text-primary">
+                Sanity API Integration
+              </h3>
+            </div>
+            {sanityForm.projectId ? (
+              <span className="px-2 py-0.5 rounded-full font-mono text-[9px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 animate-pulse">
+                CONNECTED
+              </span>
+            ) : (
+              <span className="px-2 py-0.5 rounded-full font-mono text-[9px] font-bold bg-red-500/10 text-red-400 border border-red-500/20">
+                NOT CONNECTED
+              </span>
+            )}
           </div>
 
-          <div className="space-y-3.5 text-2xs font-mono text-theme-text-secondary leading-relaxed">
-            <p>
-              This settings panel coordinates details published on the public landing page, firm directories, profile links, and contact options.
-            </p>
-            <p>
-              Changes applied here take immediate effect across public sections upon updating. All updates are handled directly by the content management system.
-            </p>
-          </div>
+          <form onSubmit={handleSaveSanity} className="space-y-3.5 text-xs font-sans">
+            <div className="space-y-1.5 text-left">
+              <label className="font-mono text-2xs uppercase tracking-wider font-extrabold text-theme-text-secondary flex items-center justify-between">
+                <span>Sanity Project ID</span>
+                <span className="text-[9px] lowercase font-normal opacity-60">sanity_project_id</span>
+              </label>
+              <input
+                type="text"
+                value={sanityForm.projectId}
+                onChange={(e) => setSanityForm({ ...sanityForm, projectId: e.target.value })}
+                placeholder="e.g. 8g6h1k2v (leave blank to disconnect)"
+                className="w-full bg-theme-surface border border-theme-border hover:border-theme-border/80 focus:border-amber-500 rounded-lg px-3 py-2 text-xs text-theme-text-primary focus:outline-hidden transition-all font-mono"
+              />
+            </div>
+
+            <div className="space-y-1.5 text-left">
+              <label className="font-mono text-2xs uppercase tracking-wider font-extrabold text-theme-text-secondary flex items-center justify-between">
+                <span>Sanity Dataset</span>
+                <span className="text-[9px] lowercase font-normal opacity-60">sanity_dataset</span>
+              </label>
+              <input
+                type="text"
+                value={sanityForm.dataset}
+                onChange={(e) => setSanityForm({ ...sanityForm, dataset: e.target.value })}
+                placeholder="production"
+                className="w-full bg-theme-surface border border-theme-border hover:border-theme-border/80 focus:border-amber-500 rounded-lg px-3 py-2 text-xs text-theme-text-primary focus:outline-hidden transition-all font-mono"
+              />
+            </div>
+
+            <div className="space-y-1.5 text-left">
+              <label className="font-mono text-2xs uppercase tracking-wider font-extrabold text-theme-text-secondary flex items-center justify-between">
+                <span>Write API Token (Secure)</span>
+                <span className="text-[9px] lowercase font-normal opacity-60">sanity_write_token</span>
+              </label>
+              <input
+                type="password"
+                value={sanityForm.writeToken}
+                onChange={(e) => setSanityForm({ ...sanityForm, writeToken: e.target.value })}
+                placeholder="••••••••••••••••••••••••"
+                className="w-full bg-theme-surface border border-theme-border hover:border-theme-border/80 focus:border-amber-500 rounded-lg px-3 py-2 text-xs text-theme-text-primary focus:outline-hidden transition-all font-mono"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-lg text-xs font-sans flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-3xs"
+            >
+              <Save className="w-3.5 h-3.5" />
+              <span>Update Connection</span>
+            </button>
+          </form>
         </div>
 
         {/* Contact Details & Social Media Links config card */}

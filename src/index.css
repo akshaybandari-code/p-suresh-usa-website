@@ -122,3 +122,19 @@ input::placeholder, textarea::placeholder {
   color: var(--placeholder) !important;
 }
 
+/* Premium refined focus style for form inputs, selects, and textareas */
+input:not([type="checkbox"]):not([type="radio"]):focus,
+select:focus,
+textarea:focus {
+  outline: none !important;
+  --tw-ring-offset-width: 0px !important;
+  --tw-ring-offset-color: transparent !important;
+  --tw-ring-color: transparent !important;
+  --tw-ring-shadow: none !important;
+  --tw-shadow: none !important;
+  border-color: #f59e0b !important; /* Amber-500 */
+  box-shadow: 0 0 0 1.5px rgba(245, 158, 11, 0.2) !important;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+}
+
+

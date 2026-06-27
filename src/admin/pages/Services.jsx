@@ -5,7 +5,48 @@ import Pagination from '../components/Pagination';
 import Modal from '../components/Modal';
 import ConfirmDialog from '../components/ConfirmDialog';
 import { cmsService } from '../services/cmsService';
-import { Briefcase, FileText, CheckCircle, AlertCircle, Sparkles } from 'lucide-react';
+import { 
+  Briefcase, 
+  FileText, 
+  CheckCircle, 
+  AlertCircle, 
+  Sparkles,
+  ShieldAlert,
+  Scale,
+  BadgePercent,
+  Globe,
+  Award,
+  HelpCircle,
+  FileCheck,
+  Landmark,
+  Percent,
+  Receipt,
+  ShieldCheck,
+  Users,
+  BookOpen,
+  Calendar,
+  TrendingUp
+} from 'lucide-react';
+
+const iconMap = {
+  Briefcase,
+  FileText,
+  ShieldAlert,
+  Scale,
+  BadgePercent,
+  Globe,
+  Award,
+  HelpCircle,
+  FileCheck,
+  Landmark,
+  Percent,
+  Receipt,
+  ShieldCheck,
+  Users,
+  BookOpen,
+  Calendar,
+  TrendingUp
+};
 
 export default function Services() {
   const [services, setServices] = useState([]);
@@ -174,11 +215,19 @@ export default function Services() {
     {
       header: 'Icon',
       accessor: 'icon',
-      render: (row, val) => (
-        <span className="p-1 px-2.5 bg-theme-surface border border-theme-border font-mono rounded text-amber-500 font-extrabold select-none text-[10px]">
-          {val || 'FileText'}
-        </span>
-      )
+      render: (row, val) => {
+        const IconComponent = iconMap[val] || FileText;
+        return (
+          <div className="flex items-center gap-2 select-none">
+            <span className="p-1.5 bg-amber-500/10 border border-amber-500/20 rounded text-amber-500 flex items-center justify-center">
+              <IconComponent className="w-4 h-4 shrink-0" />
+            </span>
+            <span className="text-[10px] font-mono text-theme-text-secondary select-all font-semibold uppercase">
+              {val || 'FileText'}
+            </span>
+          </div>
+        );
+      }
     },
     {
       header: 'Title',

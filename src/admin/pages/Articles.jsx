@@ -177,16 +177,16 @@ export default function Articles() {
       header: 'Article Info',
       accessor: 'title',
       render: (row, val) => (
-        <div className="text-left font-semibold text-theme-text-primary space-y-0.5">
-          <p>{val}</p>
-          <div className="flex items-center gap-2 text-[10px] font-mono text-theme-text-secondary select-none opacity-70">
-            <span className="flex items-center gap-1">
-              <Calendar className="w-3 h-3" />
+        <div className="text-left font-semibold text-theme-text-primary space-y-1.5">
+          <p className="leading-snug text-sm">{val}</p>
+          <div className="flex items-center gap-3 text-[10px] font-mono text-theme-text-secondary select-none opacity-80">
+            <span className="flex items-center gap-1 shrink-0">
+              <Calendar className="w-3.5 h-3.5 text-amber-500" />
               <span>{row.date || 'Today'}</span>
             </span>
             <span>•</span>
-            <span className="flex items-center gap-1">
-              <User className="w-3 h-3" />
+            <span className="flex items-center gap-1 shrink-0">
+              <User className="w-3.5 h-3.5 text-amber-500" />
               <span>{row.author || 'P. Suuresh'}</span>
             </span>
           </div>
@@ -263,7 +263,7 @@ export default function Articles() {
         selectedCategory={selectedCategory}
         onCategoryChange={setSelectedCategory}
         onCreate={handleOpenCreateForm}
-        createLabel="Compose Article"
+        createLabel="New Article"
       />
 
       {/* Table output */}

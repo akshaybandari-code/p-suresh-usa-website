@@ -289,7 +289,7 @@ export default function Contact() {
                       
                       {/* Name */}
                       <div className="space-y-2">
-                        <label htmlFor="form-name" className="block text-2xs font-mono uppercase tracking-wider text-theme-text-secondary font-bold">
+                        <label htmlFor="form-name" className="block text-[15px] font-sans font-semibold text-theme-text-primary">
                           Full Name *
                         </label>
                         <input
@@ -301,7 +301,7 @@ export default function Contact() {
                           className="w-full px-4 py-2.5 text-sm bg-theme-input-bg text-theme-text-primary border border-theme-input-border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 hover:border-slate-400 dark:hover:border-zinc-650 transition-all font-sans"
                         />
                         {errors.name && (
-                          <p className="text-red-500 text-2xs font-mono flex items-center gap-1 mt-1.5 animate-pulse">
+                          <p className="text-red-600 dark:text-red-400 text-xs font-sans font-semibold flex items-center gap-1.5 mt-1.5 animate-pulse">
                             <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {errors.name}
                           </p>
                         )}
@@ -309,7 +309,7 @@ export default function Contact() {
 
                       {/* Email */}
                       <div className="space-y-2">
-                        <label htmlFor="form-email" className="block text-2xs font-mono uppercase tracking-wider text-theme-text-secondary font-bold">
+                        <label htmlFor="form-email" className="block text-[15px] font-sans font-semibold text-theme-text-primary">
                           Email Address *
                         </label>
                         <input
@@ -321,7 +321,7 @@ export default function Contact() {
                           className="w-full px-4 py-2.5 text-sm bg-theme-input-bg text-theme-text-primary border border-theme-input-border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 hover:border-slate-400 dark:hover:border-zinc-650 transition-all font-sans"
                         />
                         {errors.email && (
-                          <p className="text-red-500 text-2xs font-mono flex items-center gap-1 mt-1.5 animate-pulse">
+                          <p className="text-red-600 dark:text-red-400 text-xs font-sans font-semibold flex items-center gap-1.5 mt-1.5 animate-pulse">
                             <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {errors.email}
                           </p>
                         )}
@@ -333,7 +333,7 @@ export default function Contact() {
                       
                       {/* Country */}
                       <div className="space-y-2">
-                        <label htmlFor="form-country" className="block text-2xs font-mono uppercase tracking-wider text-theme-text-secondary font-bold">
+                        <label htmlFor="form-country" className="block text-[15px] font-sans font-semibold text-theme-text-primary">
                           Current Country of Residence *
                         </label>
                         <input
@@ -345,7 +345,7 @@ export default function Contact() {
                           className="w-full px-4 py-2.5 text-sm bg-theme-input-bg text-theme-text-primary border border-theme-input-border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 hover:border-slate-400 dark:hover:border-zinc-650 transition-all font-sans"
                         />
                         {errors.country && (
-                          <p className="text-red-500 text-2xs font-mono flex items-center gap-1 mt-1.5 animate-pulse">
+                          <p className="text-red-600 dark:text-red-400 text-xs font-sans font-semibold flex items-center gap-1.5 mt-1.5 animate-pulse">
                             <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {errors.country}
                           </p>
                         )}
@@ -353,7 +353,7 @@ export default function Contact() {
 
                       {/* Company (Optional) */}
                       <div className="space-y-2">
-                        <label htmlFor="form-company" className="block text-2xs font-mono uppercase tracking-wider text-theme-text-secondary font-bold">
+                        <label htmlFor="form-company" className="block text-[15px] font-sans font-semibold text-theme-text-primary">
                           Company Name (Optional)
                         </label>
                         <input
@@ -372,7 +372,7 @@ export default function Contact() {
                       
                       {/* Service of Interest */}
                       <div className="space-y-2">
-                        <label htmlFor="form-service" className="block text-2xs font-mono uppercase tracking-wider text-theme-text-secondary font-bold">
+                        <label htmlFor="form-service" className="block text-[15px] font-sans font-semibold text-theme-text-primary">
                           Service Requested *
                         </label>
                         <select
@@ -387,7 +387,7 @@ export default function Contact() {
                           ))}
                         </select>
                         {errors.service && (
-                          <p className="text-red-500 text-2xs font-mono flex items-center gap-1 mt-1.5 animate-pulse">
+                          <p className="text-red-600 dark:text-red-400 text-xs font-sans font-semibold flex items-center gap-1.5 mt-1.5 animate-pulse">
                             <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {errors.service}
                           </p>
                         )}
@@ -395,7 +395,7 @@ export default function Contact() {
 
                       {/* Preferred Time Zone */}
                       <div className="space-y-2">
-                        <label htmlFor="form-timezone" className="block text-2xs font-mono uppercase tracking-wider text-theme-text-secondary font-bold">
+                        <label htmlFor="form-timezone" className="block text-[15px] font-sans font-semibold text-theme-text-primary">
                           Preferred Call Timezone *
                         </label>
                         <select
@@ -412,7 +412,7 @@ export default function Contact() {
                           <option value="GMT" className="bg-theme-card text-theme-text-primary">Greenwich Mean Time (GMT)</option>
                         </select>
                         {errors.timezone && (
-                          <p className="text-red-500 text-2xs font-mono flex items-center gap-1 mt-1.5 animate-pulse">
+                          <p className="text-red-600 dark:text-red-400 text-xs font-sans font-semibold flex items-center gap-1.5 mt-1.5 animate-pulse">
                             <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {errors.timezone}
                           </p>
                         )}
@@ -422,7 +422,7 @@ export default function Contact() {
 
                     {/* Message Area */}
                     <div className="space-y-2">
-                      <label htmlFor="form-message" className="block text-2xs font-mono uppercase tracking-wider text-theme-text-secondary font-bold">
+                      <label htmlFor="form-message" className="block text-[15px] font-sans font-semibold text-theme-text-primary">
                         Message / Details of Your Inquiry *
                       </label>
                       <textarea
@@ -434,7 +434,7 @@ export default function Contact() {
                         className="w-full px-4 py-2.5 text-sm bg-theme-input-bg text-theme-text-primary border border-theme-input-border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 hover:border-slate-400 dark:hover:border-zinc-650 transition-all font-sans"
                       />
                       {errors.message && (
-                        <p className="text-red-500 text-2xs font-mono flex items-center gap-1 mt-1.5 animate-pulse">
+                        <p className="text-red-600 dark:text-red-400 text-xs font-sans font-semibold flex items-center gap-1.5 mt-1.5 animate-pulse">
                           <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {errors.message}
                         </p>
                       )}
@@ -536,7 +536,7 @@ export default function Contact() {
                       <button
                         id="reset-form-success-btn"
                         onClick={() => setSubmitted(false)}
-                        className="px-6 py-3 inline-flex items-center justify-center gap-2 text-xs font-bold rounded-lg bg-theme-surface hover:bg-theme-border text-theme-text-primary hover:text-amber-500 font-mono transition-all duration-200 border border-theme-border shadow-2xs hover:shadow-xs cursor-pointer select-none active:scale-98"
+                        className="px-6 py-3 inline-flex items-center justify-center gap-2 text-xs font-bold rounded-lg bg-theme-surface hover:bg-theme-border text-theme-text-primary hover:text-amber-500 font-sans transition-all duration-200 border border-theme-border shadow-2xs hover:shadow-xs cursor-pointer select-none active:scale-98"
                       >
                         Submit Another Query
                       </button>

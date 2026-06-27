@@ -15,36 +15,9 @@ import {
 import useServices from '../hooks/useServices';
 import useArticles from '../hooks/useArticles';
 import useTaxUpdates from '../hooks/useTaxUpdates';
+import { mockTestimonials } from '../data/mockData';
 
-const testimonialsData = [
-  {
-    id: 'rev-1',
-    name: 'Sanjeev Nair',
-    role: 'Technology Enterprise VP',
-    company: 'SF Bay Area',
-    quote: 'Selling our ancestral property in Hyderabad involved intricate compliance. Anjali and Suuresh arranged for our Lower TDS Certificate from India and structured the foreign tax credit on our US return to avoid duplicate federal tax exposure. Their assistance was accurate and reliable.',
-    location: 'San Francisco, CA',
-    rating: 5
-  },
-  {
-    id: 'rev-2',
-    name: 'Meera Deshmukh',
-    role: 'Research Scientist',
-    company: 'Clinical Research Labs',
-    quote: 'As a green card holder, I was unaware of FBAR and FATCA requirements regarding my Indian accounts. P. Suuresh & Associates guided me through the Streamlined Disclosure procedure step-by-step, helping me resolve years of unfiled holdings without complications.',
-    location: 'Boston, MA',
-    rating: 5
-  },
-  {
-    id: 'rev-3',
-    name: 'Rajiv Singhal',
-    role: 'Managing Director',
-    company: 'ZettaScale Technologies',
-    quote: 'We retained the firm to structure our regional subsidiary. They compiled our Transfer Pricing documentation and drafted intercompany services agreements. Their professional expertise in both Indian and US compliance was indispensable for our operations.',
-    location: 'Austin, TX',
-    rating: 5
-  }
-];
+const testimonialsData = mockTestimonials;
 import CTASection from '../components/CTASection';
 import SEO from '../components/SEO';
 

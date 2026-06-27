@@ -49,7 +49,7 @@ export default function DataTable({
               data.map((row, rowIdx) => (
                 <tr 
                   key={row.id || rowIdx} 
-                  className="hover:bg-theme-surface/25 transition-colors duration-150 text-xs text-theme-text-primary"
+                  className="hover:bg-theme-surface/50 transition-colors duration-200 text-xs text-theme-text-primary"
                 >
                   {columns.map((col, colIdx) => {
                     const cellValue = row[col.accessor];
@@ -63,18 +63,18 @@ export default function DataTable({
                     <td className="px-6 py-4 text-right flex items-center justify-end gap-2.5">
                       {onEdit && (
                         <button
-                          onClick={() => onEdit(row)}
-                          className="p-1.5 bg-theme-surface border border-theme-border text-theme-text-secondary hover:text-amber-500 hover:border-amber-500/30 rounded transition-colors"
-                          title="Edit Document"
+                           onClick={() => onEdit(row)}
+                           className="p-1.5 bg-theme-surface border border-theme-border text-theme-text-secondary hover:text-amber-500 hover:bg-amber-500/5 hover:border-amber-500/20 rounded transition-all duration-200 cursor-pointer select-none"
+                           title="Edit Document"
                         >
                           <Edit3 className="w-3.5 h-3.5" />
                         </button>
                       )}
                       {onDelete && (
                         <button
-                          onClick={() => onDelete(row)}
-                          className="p-1.5 bg-theme-surface border border-theme-border text-theme-text-secondary hover:text-red-500 hover:border-red-500/30 rounded transition-colors"
-                          title="Delete Document"
+                           onClick={() => onDelete(row)}
+                           className="p-1.5 bg-theme-surface border border-theme-border text-theme-text-secondary hover:text-red-500 hover:bg-red-500/10 hover:border-red-500/20 rounded transition-all duration-200 cursor-pointer select-none"
+                           title="Delete Document"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>

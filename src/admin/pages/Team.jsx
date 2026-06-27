@@ -203,12 +203,30 @@ export default function Team() {
     {
       header: 'Credentials',
       accessor: 'credentials',
-      render: (row, val) => <span className="font-mono text-[10px]">{(val || []).length} filings</span>
+      render: (row, val) => {
+        const items = Array.isArray(val) ? val : [];
+        return (
+          <div className="flex flex-col gap-0.5 max-w-xs select-none text-left">
+            {items.slice(0, 2).map((cred, idx) => (
+              <span key={idx} className="font-sans text-[10px] text-theme-text-secondary truncate font-semibold" title={cred}>
+                • {cred}
+              </span>
+            ))}
+            {items.length > 2 && (
+              <span className="text-[9px] font-mono font-bold text-amber-500 pl-2">+{items.length - 2} more</span>
+            )}
+          </div>
+        );
+      }
     },
     {
-      header: 'Expertise',
+      header: 'Expertise Count',
       accessor: 'expertise',
-      render: (row, val) => <span className="font-mono text-[10px]">{(val || []).length} areas</span>
+      render: (row, val) => (
+        <span className="font-mono font-bold text-[10px] px-2.5 py-1 bg-amber-500/10 text-amber-500 border border-amber-500/20 rounded-full inline-block">
+          {Array.isArray(val) ? val.length : 0} Areas
+        </span>
+      )
     }
   ];
 

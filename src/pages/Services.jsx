@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import useServices from '../hooks/useServices';
+import { mockFaqs } from '../data/mockData';
 import {
   FileText,
   Globe,
@@ -212,28 +213,28 @@ export default function Services() {
             </h3>
           </div>
 
-          <div className="space-y-6">
-            
-            <div className="p-5 bg-theme-card border border-theme-border rounded-xl shadow-xs transition-all duration-200 hover:shadow-sm">
-              <h4 className="text-sm font-bold text-theme-text-primary flex gap-1.5 items-center mb-2 font-display">
-                <HelpCircle className="w-4 h-4 text-amber-500 shrink-0" />
-                Who qualifies as a "US Person" for FBAR and FATCA reporting?
-              </h4>
-              <p className="text-xs text-theme-text-secondary leading-relaxed font-sans">
-                The IRS defines "US Person" to include US citizens (even those born abroad residing in India), green card holders (Permanent Residents), and foreign nationals who meet the Substantial Presence Test (generally residing in the US for at least 183 days over a 3-year weighted period). Such individuals are required to report worldwide income and foreign financial assets.
-              </p>
-            </div>
-
-            <div className="p-5 bg-theme-card border border-theme-border rounded-xl shadow-xs transition-all duration-200 hover:shadow-sm">
-              <h4 className="text-sm font-bold text-theme-text-primary flex gap-1.5 items-center mb-2 font-display">
-                <HelpCircle className="w-4 h-4 text-amber-500 shrink-0" />
-                How does the India-US DTAA (Tax Treaty) help avoid duplicate taxation?
-              </h4>
-              <p className="text-xs text-theme-text-secondary leading-relaxed font-sans">
-                The Double Taxation Avoidance Agreement (DTAA) provides mechanism rules to claim Foreign Tax Credits (FTC) under IRC Section 901/902 or Indian standard tax brackets. For instance, any property sold in Hyderabad showing 20% Indian TDS can be credited on Form 1116 in your US 1040 layout, reducing or neutralizing duplication.
-              </p>
-            </div>
-
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+            {mockFaqs.map((faq) => (
+              <div 
+                key={faq.id} 
+                className="p-5 bg-theme-card border border-theme-border rounded-xl shadow-xs transition-all duration-200 hover:shadow-sm flex flex-col justify-between"
+              >
+                <div>
+                  <h4 className="text-sm font-bold text-theme-text-primary flex gap-1.5 items-start mb-2 font-display">
+                    <HelpCircle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                    <span>{faq.question}</span>
+                  </h4>
+                  <p className="text-xs text-theme-text-secondary leading-relaxed font-sans">
+                    {faq.answer}
+                  </p>
+                </div>
+                <div className="mt-3 pt-2 border-t border-theme-border/50 flex">
+                  <span className="text-[9px] font-mono font-bold bg-amber-500/10 text-amber-500 px-2 py-0.5 rounded uppercase select-none">
+                    {faq.category}
+                  </span>
+                </div>
+              </div>
+            ))}
           </div>
 
         </div>

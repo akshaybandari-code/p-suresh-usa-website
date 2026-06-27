@@ -1,5 +1,13 @@
 import { createClient } from '@sanity/client';
 import { safeLocalStorage as localStorage } from '../../utils/safeLocalStorage';
+import {
+  mockServices,
+  mockArticles,
+  mockTaxUpdates,
+  mockResources,
+  mockTeam,
+  mockTaxDeadlines
+} from '../../data/mockData';
 
 // Dynamic Sanity client creator for administrative CRUD mutations
 export const getCustomSanityClient = () => {
@@ -34,10 +42,32 @@ const initLocalStorage = () => {};
 const getLocalStorageData = (key) => {
   try {
     const raw = localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : [];
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    }
   } catch (err) {
     console.warn(`Error parsing localStorage key ${key}`, err);
-    return [];
+  }
+
+  // Return the mock fallback data if localStorage has no data for the key or it is empty
+  switch (key) {
+    case 'cms_services':
+      return mockServices;
+    case 'cms_articles':
+      return mockArticles;
+    case 'cms_tax_updates':
+      return mockTaxUpdates;
+    case 'cms_resources':
+      return mockResources;
+    case 'cms_team':
+      return mockTeam;
+    case 'cms_tax_deadlines':
+      return mockTaxDeadlines;
+    default:
+      return [];
   }
 };
 
@@ -71,7 +101,7 @@ export const cmsService = {
           benefits
         }`;
         const docs = await withTimeout(client.fetch(query));
-        if (Array.isArray(docs)) {
+        if (Array.isArray(docs) && docs.length > 0) {
           // Sync to cache
           saveLocalStorageData('cms_services', docs);
           return docs;
@@ -202,7 +232,7 @@ export const cmsService = {
           featured
         }`;
         const docs = await withTimeout(client.fetch(query));
-        if (Array.isArray(docs)) {
+        if (Array.isArray(docs) && docs.length > 0) {
           saveLocalStorageData('cms_articles', docs);
           return docs;
         }
@@ -333,7 +363,7 @@ export const cmsService = {
           guidelines
         }`;
         const docs = await withTimeout(client.fetch(query));
-        if (Array.isArray(docs)) {
+        if (Array.isArray(docs) && docs.length > 0) {
           saveLocalStorageData('cms_tax_updates', docs);
           return docs;
         }
@@ -461,7 +491,7 @@ export const cmsService = {
           category
         }`;
         const docs = await withTimeout(client.fetch(query));
-        if (Array.isArray(docs)) {
+        if (Array.isArray(docs) && docs.length > 0) {
           saveLocalStorageData('cms_resources', docs);
           return docs;
         }
@@ -584,7 +614,7 @@ export const cmsService = {
           credentials
         }`;
         const docs = await withTimeout(client.fetch(query));
-        if (Array.isArray(docs)) {
+        if (Array.isArray(docs) && docs.length > 0) {
           saveLocalStorageData('cms_team', docs);
           return docs;
         }
@@ -704,7 +734,7 @@ export const cmsService = {
           description
         }`;
         const docs = await withTimeout(client.fetch(query));
-        if (Array.isArray(docs)) {
+        if (Array.isArray(docs) && docs.length > 0) {
           saveLocalStorageData('cms_tax_deadlines', docs);
           return docs;
         }
