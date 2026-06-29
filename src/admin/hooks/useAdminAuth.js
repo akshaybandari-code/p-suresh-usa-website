@@ -18,7 +18,7 @@ export const useAdminAuth = () => {
 
   const login = (username, password) => {
     // Standard secure-checking for our custom CMS
-    if (username.trim() === 'admin' && password.trim() === 'admin') {
+    if (username.trim() === 'admin' && password.trim() === 'admin@1234') {
       safeLocalStorage.setItem('admin_authenticated', 'true');
       setIsAuthenticated(true);
       return true;

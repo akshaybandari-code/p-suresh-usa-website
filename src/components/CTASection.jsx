@@ -12,7 +12,7 @@ export default function CTASection({ title, subtitle }) {
               Need Guidance on India–US Tax & Compliance?
             </h3>
             <p className="text-sm text-theme-text-secondary leading-relaxed">
-              P. Suresh & Associates assists NRIs, expatriates, and international businesses with cross-border taxation, FBAR reporting, FEMA compliance, international tax planning, and regulatory requirements.
+              P. Suuresh & Associates assists NRIs, expatriates, and international businesses with cross-border taxation, FBAR reporting, FEMA compliance, international tax planning, and regulatory requirements.
             </p>
             <Link
               to="/contact"

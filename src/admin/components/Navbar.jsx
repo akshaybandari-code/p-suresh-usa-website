@@ -1,15 +1,30 @@
 import React from 'react';
-import { Menu, Sun, Moon, Link as LinkIcon, User, Monitor } from 'lucide-react';
+import { Menu, Sun, Moon, Link as LinkIcon } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function Navbar({ onMenuToggle, adminUser }) {
   const { theme, toggleTheme } = useTheme();
+  const location = useLocation();
+
+  const getPageTitle = (path) => {
+    const cleanPath = path.toLowerCase();
+    if (cleanPath === '/admin' || cleanPath === '/admin/' || cleanPath === '/admin/dashboard') return 'Dashboard';
+    if (cleanPath.startsWith('/admin/services')) return 'Services';
+    if (cleanPath.startsWith('/admin/articles')) return 'Articles';
+    if (cleanPath.startsWith('/admin/tax-updates')) return 'Tax Updates';
+    if (cleanPath.startsWith('/admin/resources')) return 'Resources';
+    if (cleanPath.startsWith('/admin/team')) return 'Team Members';
+    if (cleanPath.startsWith('/admin/settings')) return 'Settings';
+    return 'Admin Portal';
+  };
+
+  const pageTitle = getPageTitle(location.pathname);
 
   return (
     <header
       id="admin-navbar-header"
-      className="h-16 bg-theme-card border-b border-theme-border flex items-center justify-between px-6 sticky top-0 z-30"
+      className="h-16 bg-theme-surface border-b border-theme-border flex items-center justify-between px-6 md:px-8 fixed top-0 left-0 lg:left-64 right-0 z-30 transition-all duration-200 !rounded-none !shadow-none"
     >
       <div className="flex items-center gap-4">
         {/* Mobile Burger Toggle */}
@@ -23,13 +38,19 @@ export default function Navbar({ onMenuToggle, adminUser }) {
         </button>
 
         {/* Workspace Breadcrumbs */}
-        <div className="hidden sm:flex items-center gap-2 select-none">
-          <Link to="/" className="text-xs font-mono font-bold text-amber-500 hover:underline flex items-center gap-1">
-            <LinkIcon className="w-3 h-3" />
+        <div className="hidden sm:flex items-center gap-2 select-none text-xs">
+          <Link to="/" className="font-mono font-bold text-amber-500 hover:underline flex items-center gap-1">
+            <LinkIcon className="w-3.5 h-3.5" />
             <span>Public Site</span>
           </Link>
-          <span className="text-theme-text-secondary font-mono text-[11px] select-none">/</span>
-          <span className="text-xs font-semibold text-theme-text-primary">Admin Portal</span>
+          <span className="text-theme-text-secondary font-mono text-[11px]">/</span>
+          <Link to="/admin/dashboard" className="font-semibold text-theme-text-secondary hover:text-theme-text-primary transition-colors">
+            Admin Portal
+          </Link>
+          <span className="text-theme-text-secondary font-mono text-[11px]">/</span>
+          <span className="font-bold text-amber-500 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-md font-sans">
+            {pageTitle}
+          </span>
         </div>
       </div>
 

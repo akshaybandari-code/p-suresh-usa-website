@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Key, ShieldAlert, CheckCircle, HelpCircle } from 'lucide-react';
+import { Key, ShieldAlert, CheckCircle, Info } from 'lucide-react';
 import useAdminAuth from '../hooks/useAdminAuth';
 
 export default function Login() {
-  const [username, setUsername] = useState('admin');
-  const [password, setPassword] = useState('admin');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -40,32 +40,36 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-theme-background px-4 py-16 font-sans">
-      <div className="w-full max-w-md bg-theme-card border border-theme-border/60 rounded-2xl shadow-xl p-8 space-y-6">
+    <div className="h-screen w-screen flex items-center justify-center bg-theme-background px-4 font-sans relative overflow-hidden select-none">
+      {/* Decorative Background Glows */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="w-full max-w-md bg-theme-card border border-theme-border/80 rounded-2xl shadow-2xl p-7 space-y-6 relative z-10 transition-all">
         
         {/* Banner Section */}
-        <div className="text-center space-y-2 select-none">
-          <div className="inline-flex p-3 bg-amber-500/10 border border-amber-500/20 text-amber-500 rounded-xl mb-1">
-            <Key className="w-6 h-6 animate-pulse" />
+        <div className="text-center space-y-2">
+          <div className="inline-flex p-2.5 bg-amber-500/10 border border-amber-500/20 text-amber-500 rounded-xl mb-1 transition-all duration-300 hover:scale-105">
+            <Key className="w-5.5 h-5.5 animate-pulse" />
           </div>
-          <h2 className="text-2xl font-extrabold font-display tracking-tight text-theme-text-primary">
-            Admin Sign-In
+          <h2 className="text-xl font-extrabold font-display tracking-tight text-theme-text-primary">
+            Administrator Login
           </h2>
-          <p className="text-xs text-theme-text-secondary">
-            Accounting & Tax Services Admin Portal
+          <p className="text-xs text-theme-text-secondary select-none">
+            Content Management System for SuureshUSA
           </p>
         </div>
 
         {/* Handshake Messages */}
         {errorMsg && (
-          <div className="bg-red-500/10 border border-red-500/20 text-red-500 p-3.5 rounded-lg text-xs flex items-start gap-2.5 animate-in fade-in duration-200">
+          <div className="bg-red-500/10 border border-red-500/20 text-red-500 p-3 rounded-lg text-xs flex items-start gap-2 animate-in fade-in duration-200">
             <ShieldAlert className="w-4 h-4 shrink-0 mt-0.5" />
             <span>{errorMsg}</span>
           </div>
         )}
 
         {successMsg && (
-          <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 p-3.5 rounded-lg text-xs flex items-start gap-2.5 animate-in fade-in duration-200">
+          <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 p-3 rounded-lg text-xs flex items-start gap-2 animate-in fade-in duration-200">
             <CheckCircle className="w-4 h-4 shrink-0 mt-0.5" />
             <span>{successMsg}</span>
           </div>
@@ -74,7 +78,7 @@ export default function Login() {
         {/* Credentials Form */}
         <form onSubmit={handleSubmit} className="space-y-4 text-xs">
           <div className="space-y-1.5 text-left">
-            <label className="font-mono uppercase font-bold tracking-wider text-theme-text-secondary select-none">
+            <label className="font-mono uppercase font-bold tracking-wider text-theme-text-secondary/80 text-[10px]">
               Username
             </label>
             <input
@@ -82,13 +86,13 @@ export default function Login() {
               required
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="e.g. admin"
-              className="w-full bg-theme-surface border border-theme-border hover:border-theme-border/80 focus:border-amber-500 rounded-lg px-3.5 py-2.5 text-xs text-theme-text-primary focus:outline-hidden transition-all font-mono"
+              placeholder="Enter username"
+              className="w-full bg-theme-surface border border-theme-border hover:border-theme-border/80 focus:border-amber-500 rounded-lg px-3.5 py-2 text-xs text-theme-text-primary focus:outline-hidden transition-all font-mono"
             />
           </div>
 
           <div className="space-y-1.5 text-left">
-            <label className="font-mono uppercase font-bold tracking-wider text-theme-text-secondary select-none">
+            <label className="font-mono uppercase font-bold tracking-wider text-theme-text-secondary/80 text-[10px]">
               Password
             </label>
             <input
@@ -96,36 +100,25 @@ export default function Login() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              className="w-full bg-theme-surface border border-theme-border hover:border-theme-border/80 focus:border-amber-500 rounded-lg px-3.5 py-2.5 text-xs text-theme-text-primary focus:outline-hidden transition-all font-mono"
+              placeholder="Enter password"
+              className="w-full bg-theme-surface border border-theme-border hover:border-theme-border/80 focus:border-amber-500 rounded-lg px-3.5 py-2 text-xs text-theme-text-primary focus:outline-hidden transition-all font-mono"
             />
           </div>
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full py-3 mt-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-lg transition-all focus:outline-hidden flex items-center justify-center gap-2 font-sans text-xs shadow-3xs cursor-pointer"
-          >
-            {isLoading ? 'Signing in...' : 'Sign In'}
-          </button>
-        </form>
-
-        {/* Informational Guidelines helpful for interns/reviewers */}
-        <div className="pt-4 border-t border-theme-border/60 bg-theme-surface/10 rounded-lg p-3 text-2xs font-mono text-theme-text-secondary select-none space-y-1.5">
-          <p className="flex items-center gap-1 text-amber-500 font-bold uppercase tracking-wider text-[9px] mb-1">
-            <HelpCircle className="w-3.5 h-3.5" />
-            <span>Evaluation Quick-Access</span>
-          </p>
-          <p>This CMS is formatted for evaluation. Use the pre-authorized keys:</p>
-          <div className="grid grid-cols-2 gap-2 text-center pt-1 font-mono text-theme-text-primary">
-            <div className="p-1 bg-theme-surface rounded border border-theme-border">
-              ID: <span className="font-bold text-amber-400">admin</span>
-            </div>
-            <div className="p-1 bg-theme-surface rounded border border-theme-border">
-              PW: <span className="font-bold text-amber-400">admin</span>
-            </div>
+          <div className="pt-2">
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full py-2.5 bg-amber-500 hover:bg-amber-600 disabled:bg-amber-500/50 text-slate-950 font-bold rounded-lg transition-all focus:outline-hidden flex items-center justify-center gap-2 font-sans text-xs shadow-3xs cursor-pointer"
+            >
+              {isLoading ? 'Signing in...' : 'Sign In to Dashboard'}
+            </button>
+            
+            <p className="text-[10px] text-theme-text-secondary text-center mt-2 select-none opacity-80 leading-normal">
+              Secure administrator access for managing website content.
+            </p>
           </div>
-        </div>
+        </form>
 
       </div>
     </div>

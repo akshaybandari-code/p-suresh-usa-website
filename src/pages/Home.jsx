@@ -54,7 +54,7 @@ export default function Home() {
 
             {/* Master Headline */}
             <h1 className="text-3xl sm:text-4xl lg:text-5xl lg:leading-tight font-bold tracking-tight text-theme-text-primary font-display max-w-3xl">
-              P. Suresh &amp; Associates – Trusted India-US Tax, Compliance &amp; Advisory Experts
+              P. Suuresh &amp; Associates – Trusted India-US Tax, Compliance &amp; Advisory Experts
             </h1>
 
             {/* Comprehensive Subheading */}
@@ -87,12 +87,12 @@ export default function Home() {
       {/* NEW: ABOUT SECTION */}
       <section className="py-16 sm:py-24 bg-theme-surface">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <h2 className="text-2xs uppercase tracking-widest text-amber-500 font-mono">About P. Suresh &amp; Associates</h2>
+          <h2 className="text-2xs uppercase tracking-widest text-amber-500 font-mono">About P. Suuresh &amp; Associates</h2>
           <h3 className="text-3xl font-bold tracking-tight text-theme-text-primary font-display">
             Your Trusted Partner in Cross-Border Tax &amp; Advisory
           </h3>
           <p className="text-sm text-theme-text-secondary leading-relaxed">
-            P. Suresh &amp; Associates is a Chartered Accountancy firm specializing in India-US cross-border taxation, compliance, and advisory services for NRIs, expatriates, and international businesses. We bridge the gap between regulatory requirements in both jurisdictions, ensuring accuracy, compliance, and peace of mind.
+            P. Suuresh &amp; Associates is a Chartered Accountancy firm specializing in India-US cross-border taxation, compliance, and advisory services for NRIs, expatriates, and international businesses. We bridge the gap between regulatory requirements in both jurisdictions, ensuring accuracy, compliance, and peace of mind.
           </p>
         </div>
       </section>
@@ -161,7 +161,7 @@ export default function Home() {
                 Need Guidance on India–US Tax & Compliance?
               </h3>
               <p className="text-sm text-theme-text-secondary leading-relaxed">
-                P. Suresh & Associates assists NRIs, expatriates, and international businesses with cross-border taxation, FBAR reporting, FEMA compliance, international tax planning, and regulatory requirements.
+                P. Suuresh & Associates assists NRIs, expatriates, and international businesses with cross-border taxation, FBAR reporting, FEMA compliance, international tax planning, and regulatory requirements.
               </p>
               <Link
                 to="/contact"

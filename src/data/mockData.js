@@ -1,4 +1,4 @@
-// Centralized Local Mock Data for P. Suresh & Associates
+// Centralized Local Mock Data for P. Suuresh & Associates
 // Fully offline-capable, reusable, and consumed across all pages of the application.
 
 export const mockServices = [

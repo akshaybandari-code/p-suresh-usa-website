@@ -79,7 +79,7 @@ export default function Settings() {
 
     // Load Org credentials
     setOrgForm({
-      name: localStorage.getItem('org_name') || 'P. Suresh & Associates',
+      name: localStorage.getItem('org_name') || 'P. Suuresh & Associates',
       address: localStorage.getItem('org_address') || 'New Delhi, India & New York, USA',
       practiceArea: localStorage.getItem('org_practice_area') || 'India-US Cross-Border Tax & Compliance',
       regNumber: localStorage.getItem('org_reg_number') || 'ICAI Reg No. 102345/W',
@@ -284,7 +284,7 @@ export default function Settings() {
                   required
                   value={orgForm.name}
                   onChange={(e) => setOrgForm({ ...orgForm, name: e.target.value })}
-                  placeholder="e.g. P. Suresh & Associates"
+                  placeholder="e.g. P. Suuresh & Associates"
                   className="w-full bg-theme-surface border border-theme-border hover:border-theme-border/80 focus:border-amber-500 rounded-lg px-3.5 py-2.5 text-xs text-theme-text-primary focus:outline-hidden transition-all"
                 />
               </div>

@@ -47,7 +47,7 @@ export default function Sidebar({ isOpen, onClose, onLogout }) {
 
       <aside
         id="admin-sidebar"
-        className={`fixed inset-y-0 left-0 w-64 bg-theme-card border-r border-theme-border z-50 flex flex-col justify-between transform transition-transform duration-300 lg:translate-x-0 lg:static lg:h-full ${
+        className={`fixed inset-y-0 left-0 w-64 bg-theme-surface border-r border-theme-border z-40 flex flex-col justify-between transform transition-transform duration-300 lg:translate-x-0 !rounded-none !shadow-none ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >

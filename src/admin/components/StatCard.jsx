@@ -3,16 +3,16 @@ import React from 'react';
 export default function StatCard({ title, value, icon: Icon, trendStr, trendType = 'neutral' }) {
   const getTrendColor = () => {
     switch (trendType) {
-      case 'success': return 'text-emerald-500 bg-emerald-500/10 border-emerald-500/25';
-      case 'warning': return 'text-amber-500 bg-amber-500/10 border-amber-500/25';
-      case 'danger': return 'text-red-500 bg-red-500/10 border-red-500/25';
-      default: return 'text-theme-text-secondary bg-theme-surface border-theme-border';
+      case 'success': return 'text-emerald-600 bg-emerald-500/5 dark:text-emerald-400 dark:bg-emerald-500/10 border-emerald-500/15 dark:border-emerald-500/25';
+      case 'warning': return 'text-amber-600 bg-amber-500/5 dark:text-amber-400 dark:bg-amber-500/10 border-amber-500/15 dark:border-amber-500/25';
+      case 'danger': return 'text-red-600 bg-red-500/5 dark:text-red-400 dark:bg-red-500/10 border-red-500/15 dark:border-red-500/25';
+      default: return 'text-theme-text-secondary bg-theme-surface/60 border-theme-border/80';
     }
   };
 
   return (
     <div
-      className="bg-theme-card border border-theme-border rounded-xl py-3.5 px-4 shadow-3xs flex flex-col justify-between select-none hover:shadow-xs hover:border-theme-border/80 transition-all duration-200"
+      className="bg-theme-card border-l-3 border-l-amber-500/90 dark:border-l-amber-500 border-y border-r border-theme-border rounded-xl py-3.5 px-4 flex flex-col justify-between select-none hover:shadow-md hover:border-theme-border/90 transition-all duration-200"
     >
       <div className="flex items-start justify-between">
         <div className="space-y-0.5">
@@ -23,8 +23,8 @@ export default function StatCard({ title, value, icon: Icon, trendStr, trendType
             {value}
           </h3>
         </div>
-        <div className="p-2 bg-theme-surface border border-theme-border rounded-lg text-amber-500">
-          <Icon className="w-6 h-6" />
+        <div className="p-2.5 bg-amber-500/[0.04] dark:bg-amber-500/10 border border-amber-500/10 dark:border-amber-500/25 text-amber-600 dark:text-amber-400 rounded-xl transition-all duration-300 hover:scale-105 shrink-0">
+          <Icon className="w-5.5 h-5.5" />
         </div>
       </div>
 
